@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "cookie-logic-blocks/conditional-block",
+  "version": "1.0.0",
+  "title": "Conditional Block",
+  "category": "widgets",
+  "icon": "visibility",
+  "description": "A block that shows or hides content based on page visit counts.",
+  "keywords": [
+    "cookie",
+    "conditional",
+    "visibility",
+    "visits"
+  ],
+  "supports": {
+    "align": true,
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "attributes": {
+    "targetCookieName": {
+      "type": "string",
+      "default": ""
+    },
+    "minVisits": {
+      "type": "number",
+      "default": 1
+    },
+    "visibilityMode": {
+      "type": "string",
+      "default": "show",
+      "enum": [
+        "show",
+        "hide"
+      ]
+    }
+  },
+  "textdomain": "cookie-logic-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

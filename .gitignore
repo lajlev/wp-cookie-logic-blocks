@@ -1,0 +1,31 @@
+# Node modules
+node_modules/
+
+# Build artifacts (will be generated during build)
+# Uncomment if you don't want to commit built files
+# build/
+
+# WordPress
+.DS_Store
+*.log
+
+# Dependency lock files (optional - some prefer to commit these)
+package-lock.json
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Zip distribution files
+*.zip
+
+# Temporary files
+*.tmp
+*.bak

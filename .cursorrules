@@ -1,0 +1,83 @@
+# WordPress Cookie Logic Blocks - Development Rules
+
+## Version Management
+
+### When to Bump Version
+When making changes to the following files, you MUST increment the version number:
+
+- `src/frontend.js` - Frontend visibility logic
+- `src/index.js` - Block registration
+- `src/edit.js` - Editor component
+- `src/save.js` - Block save function
+- `src/block.json` - Block configuration
+- `includes/class-cookie-tracker.php` - Cookie tracking logic
+- `includes/class-meta-box.php` - Meta box functionality
+- `wp-cookie-logic-blocks.php` - Main plugin file
+
+### Version Update Process
+1. Update version in `wp-cookie-logic-blocks.php`:
+   - Plugin header: `* Version: X.X.X`
+   - Constant: `COOKIE_LOGIC_BLOCKS_VERSION`
+
+2. Update version in `package.json`:
+   - `"version": "X.X.X"`
+
+3. Run build: `npm run build`
+
+4. Version format: Use semantic versioning (MAJOR.MINOR.PATCH)
+   - PATCH: Bug fixes, minor changes (1.0.0 → 1.0.1)
+   - MINOR: New features, backwards compatible (1.0.0 → 1.1.0)
+   - MAJOR: Breaking changes (1.0.0 → 2.0.0)
+
+### Why Version Updates Matter
+- WordPress uses the version number in script URLs (`frontend.js?ver=1.0.1`)
+- Prevents browser/CDN caching issues on production sites
+- Ensures users get the latest JavaScript changes
+- Critical for `src/frontend.js` changes since it runs on the public site
+
+## Build Process
+
+### Before Deploying
+1. Make your code changes
+2. Update version numbers if needed (see above)
+3. Run `npm run build` to:
+   - Compile JS files to `build/` directory
+   - Create `wp-cookie-logic-blocks.zip` for distribution
+4. Test on local WordPress installation
+5. Upload zip to production
+
+### Cookie Name Validation
+- Only alphanumeric and underscores allowed
+- No dashes, no special characters
+- Enforced in `includes/class-meta-box.php` sanitization
+
+## Testing Checklist
+
+### After Frontend Changes
+- [ ] Clear browser cache (Ctrl+Shift+R / Cmd+Shift+R)
+- [ ] Check browser console for debug output
+- [ ] Verify correct version loads in DevTools Network tab
+- [ ] Test both "show" and "hide" visibility modes
+- [ ] Test with 0 visits, below threshold, and above threshold
+
+### Cookie Testing
+- [ ] Enable tracking on a page with custom cookie name
+- [ ] Visit the page, check `wp_visit_counts` cookie in DevTools
+- [ ] Verify JSON structure: `{"page_name": 2, "other_page": 1}`
+- [ ] Verify 6-month expiration
+
+## Common Issues
+
+### "Hide mode doesn't work on production"
+- Cause: Old JavaScript cached
+- Solution: Bump version number, rebuild, re-upload
+
+### "Block not showing/hiding"
+- Check: Browser console debug output
+- Check: `data-visibility-mode` attribute in HTML
+- Check: Cookie name matches exactly (case-sensitive, no dashes)
+
+### "Changes not appearing on site"
+- Solution: Hard refresh browser (Ctrl+Shift+R)
+- Solution: Clear WordPress cache plugins
+- Solution: Verify version number updated in script URL
